@@ -1,0 +1,28 @@
+.Header {
+  padding: 30px 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 60px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.Title {
+  margin: 0;
+}
+.TitleDark {
+  color: #ffff;
+}
+.Button {
+  width: 50px;
+  height: 20px;
+  border: none;
+  background: #151e21;
+  color: #ffff;
+  border-radius: 10px;
+  align-self: center;
+}
+
+.ButtonDark {
+  background: #ffff;
+  color: #151e21;
+}

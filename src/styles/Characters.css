@@ -1,0 +1,58 @@
+.Characters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+.Item {
+  display: flex;
+  flex-direction: column; 
+}
+.DataContainer {
+   position: relative; 
+   display: flex;
+   flex-direction: column;
+}
+.ImageContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px 5px 30px 30px;
+  overflow: hidden;
+}
+.Name {
+  font-size: 1.5rem;
+  margin-top: -30px;
+  padding: 40px 0 16px;
+  background: #4E9F3D;
+  color: #ffff;
+  border-radius: 0 0 30px 30px;
+  overflow: hidden;
+}
+
+.Modal {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px 5px 30px 30px;
+  text-align: left;
+  justify-content: end;
+  transition: opacity 0.3s ease-out;
+}
+.Modal:hover {
+  opacity: 1;
+  background: linear-gradient(0deg, rgba( 29, 3, 3, 0.9), rgba( 29, 3, 3, 0.45));
+  backdrop-filter: blur( 5px );
+}
+
+.Data {
+  display: inline-block;
+  margin: 10px;
+  color: #ffff;
+}

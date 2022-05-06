@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
+import useDarkMode from './hooks/useDarkMode'
+import AppContext from './context/AppContex';
+import AppUI from './componets/AppUI';
+
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={useDarkMode()}>
+      <div className='App'> 
+        <AppUI />
+      </div>
+    </AppContext.Provider>
   );
 }
 
