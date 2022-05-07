@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useReducer, useMemo } from 'react';
+import React, { 
+  useState, 
+  useEffect, 
+  useContext, 
+  useReducer, 
+  useMemo,
+  useRef } from 'react';
 import AppContext from '../context/AppContex';
 import '../styles/Characters.css';
 
@@ -26,6 +32,7 @@ function Characters() {
   const { darkMode } = useContext(AppContext);
   const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
   const [search, setSearch] = useState('');
+  const searchInput = useRef(null);
 
   useEffect(() => {
 
@@ -40,8 +47,8 @@ function Characters() {
     dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
   };
 
-  const handleSearch = (event) => {
-    setSearch(event.target.value);
+  const handleSearch = () => {
+    setSearch(searchInput.current.value);
   };
 /* 
   const filteredUsers = characters.filter((user) => {
@@ -65,7 +72,7 @@ function Characters() {
       ))}
 
     <div className='Search' >
-        <input type='text' onChange={handleSearch} />
+        <input type='text' value={search} ref={searchInput} onChange={handleSearch} />
     </div>
 
       {filteredUsers.map(character => (
