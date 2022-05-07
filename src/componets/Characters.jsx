@@ -1,11 +1,30 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useReducer } from 'react';
 import AppContext from '../context/AppContex';
 import '../styles/Characters.css';
+
+const initialState = {
+  favorites : []
+}
+
+const favoriteReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_TO_FAVORITE':
+      return {
+        ...state,
+        favorites: [...state.favorites, action.payload] 
+      };
+    break;
+    default:
+      return state;
+    break;
+  }
+}
 
 function Characters() {
 
   const [characters, setCharacters ] = useState([]);
-  const { darkMode } = useContext(AppContext)
+  const { darkMode } = useContext(AppContext);
+  const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
 
   useEffect(() => {
 
@@ -16,8 +35,19 @@ function Characters() {
   
   }, []);
 
+  const handleClick = favorite => {
+    dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
+  };
+
   return (
     <div className="Characters">
+
+      {favorites.favorites.map(favorite => (
+        <li key={favorite.id}>
+          {favorite.name}
+        </li>
+      ))}
+
       {characters.map(character => (
         <div key={character.id} className="Item" >
           <div className='DataContainer' >
@@ -32,6 +62,9 @@ function Characters() {
             </div>
           </div>
           <h2 className={`Name ${ darkMode && 'NameDark'}`}>{character.name}</h2>
+          <button type='button' onClick={() => handleClick(character)} >
+            Add to favorite
+          </button>
         </div>
       ))}
     </div>
