@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, { useState, useEffect, useContext, useReducer, useMemo } from 'react';
 import AppContext from '../context/AppContex';
 import '../styles/Characters.css';
 
@@ -25,6 +25,7 @@ function Characters() {
   const [characters, setCharacters ] = useState([]);
   const { darkMode } = useContext(AppContext);
   const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
 
@@ -39,16 +40,35 @@ function Characters() {
     dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
   };
 
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  };
+/* 
+  const filteredUsers = characters.filter((user) => {
+    return user.name.toLowerCase().includes(search.toLowerCase());
+  }); */
+
+  const filteredUsers = useMemo(() => 
+  characters.filter((user) => {
+      return user.name.toLowerCase().includes(search.toLowerCase());
+    }),
+    [characters, search]  
+  );
+
   return (
     <div className="Characters">
 
       {favorites.favorites.map(favorite => (
         <li key={favorite.id}>
           {favorite.name}
-        </li>
+        </li>       
       ))}
 
-      {characters.map(character => (
+    <div className='Search' >
+        <input type='text' onChange={handleSearch} />
+    </div>
+
+      {filteredUsers.map(character => (
         <div key={character.id} className="Item" >
           <div className='DataContainer' >
             <div className='Modal'>
