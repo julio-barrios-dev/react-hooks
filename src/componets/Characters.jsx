@@ -4,12 +4,14 @@ import React, {
   useContext, 
   useReducer, 
   useMemo,
-  useRef } from 'react';
+  useRef,
+  useCallback } from 'react';
 import AppContext from '../context/AppContex';
+import Search from './Search';
 import '../styles/Characters.css';
 
 const initialState = {
-  favorites : []
+  favorites: []
 }
 
 const favoriteReducer = (state, action) => {
@@ -47,9 +49,14 @@ function Characters() {
     dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
   };
 
-  const handleSearch = () => {
+/*   const handleSearch = () => {
     setSearch(searchInput.current.value);
-  };
+  }; */
+
+  const handleSearch = useCallback(() => {
+    setSearch(searchInput.current.value);
+  }, []);
+
 /* 
   const filteredUsers = characters.filter((user) => {
     return user.name.toLowerCase().includes(search.toLowerCase());
@@ -71,9 +78,7 @@ function Characters() {
         </li>       
       ))}
 
-    <div className='Search' >
-        <input type='text' value={search} ref={searchInput} onChange={handleSearch} />
-    </div>
+      <Search search={search} searchInput={searchInput} handleSearch={handleSearch} />
 
       {filteredUsers.map(character => (
         <div key={character.id} className="Item" >
