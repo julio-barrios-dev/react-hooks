@@ -8,6 +8,7 @@ import React, {
   useCallback } from 'react';
 import AppContext from '../context/AppContex';
 import Search from './Search';
+import useCharacters from '../hooks/useCharacters';
 import '../styles/Characters.css';
 
 const initialState = {
@@ -28,22 +29,17 @@ const favoriteReducer = (state, action) => {
   }
 }
 
+
 function Characters() {
 
-  const [characters, setCharacters ] = useState([]);
   const { darkMode } = useContext(AppContext);
   const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
   const [search, setSearch] = useState('');
   const searchInput = useRef(null);
 
-  useEffect(() => {
+  const API = 'https://rickandmortyapi.com/api/character/';
 
-      fetch('https://rickandmortyapi.com/api/character/')
-      .then(response => response.json()) //Convierte la info a formato json
-      .then(data => setCharacters(data.results))
-      .then(console.log())
-  
-  }, []);
+  const characters  = useCharacters(API);
 
   const handleClick = favorite => {
     dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
