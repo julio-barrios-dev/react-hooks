@@ -42,7 +42,10 @@ function Characters() {
   const characters  = useCharacters(API);
 
   const handleClick = favorite => {
-    dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
+    const val = !favorites.favorites.includes(favorite)
+    if (val) {
+      dispatch( { type: 'ADD_TO_FAVORITE', payload: favorite } )
+    }
   };
 
 /*   const handleSearch = () => {
@@ -67,6 +70,7 @@ function Characters() {
 
   return (
     <div className="Characters">
+      <Search search={search} searchInput={searchInput} handleSearch={handleSearch}/>
 
       {favorites.favorites.map(favorite => (
         <li key={favorite.id}>
@@ -74,7 +78,6 @@ function Characters() {
         </li>       
       ))}
 
-      <Search search={search} searchInput={searchInput} handleSearch={handleSearch} />
 
       {filteredUsers.map(character => (
         <div key={character.id} className="Item" >
@@ -90,7 +93,7 @@ function Characters() {
             </div>
           </div>
           <h2 className={`Name ${ darkMode && 'NameDark'}`}>{character.name}</h2>
-          <button type='button' onClick={() => handleClick(character)} >
+          <button className='ButtonFavorite' type='button' onClick={() => handleClick(character)} >
             Add to favorite
           </button>
         </div>
